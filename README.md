@@ -16,8 +16,6 @@ A meme that captures how I currently feel about my university studies is
 
 ### Bread
 
-![](https://media.tenor.com/fcvBLow4dXMAAAAM/bagel.gif)
-
 * **Milk Bread**
   1. *Peanut Butter, Fried Egg*
   2. *Cheese, Tomato*
@@ -30,3 +28,4 @@ A meme that captures how I currently feel about my university studies is
  
 [Bagel Recipe](https://sallysbakingaddiction.com/homemade-bagels/)
  
+![](https://media.tenor.com/fcvBLow4dXMAAAAM/bagel.gif)
