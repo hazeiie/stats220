@@ -1,0 +1,83 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+```
+
+```{css}
+
+```
+
+## Daily Screentime Habits
+
+This report shows personal iphone screen time habits over two weeks in relation to the Content platforms used.   
+
+```{r fig.width = 12, fig.height = 4}
+
+library(tidyverse)
+
+logged_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vSV-X_MP9ZXEqGBFpikQIpJt5oYWF4x9dUZscpv_76qnByNAF-MDTbRAIJpOtnQpAiZoH0zgxqcuvaQ/pub?gid=133299063&single=true&output=csv")
+
+latest_data <- logged_data %>%
+  rename(timestamp = 1,
+    Screentime = 2,
+    Content_Platform = 3,
+    Majority_Screentime = 4,
+    Additional_Device = 5,
+    Second_Platform = 6
+  )
+
+## Summary Values Used:
+
+# Summary Value 0: Total Number of Responses
+Number_of_responses <- nrow(logged_data)
+
+# Summary Value 1: Mean Screentime 
+mean_screentime <- latest_data %>% 
+  summarise(mean_screentime = mean(Screentime), na.rm = TRUE) %>%
+  pull(mean_screentime)
+
+# Summary Value 3: Average Screentime in relation to most used Content Platforms
+avg_platform <- latest_data %>%
+  group_by(Content_Platform) %>%
+  summarise(avg_time = mean(Screentime))
+
+# Summary Value 4: Content platforms where more than half of days screentime was spent
+Dominating_Platform <- latest_data %>%
+  filter(Majority_Screentime == "Yes") %>%
+  count(Content_Platform)
+
+# Summary Value 7: 
+Dominating_Time <- latest_data %>%
+  group_by(Content_Platform, Majority_Screentime) %>%
+  summarise(avg_time = mean(Screentime))
+
+
+# Bar Chart 2: Content Platforms that take up Half of Screentime
+ggplot(data = Dominating_Platform) +
+  geom_bar(aes(y = Content_Platform, x = n), 
+           stat = "identity",
+           fill = "#0000FF") +
+  labs(title = "Dominating Content Platforms Per Day",
+       x = "Days where Platform was Dominating Screentime",
+       y = "Content Platform")
+
+paste0("This graph depicts the Content platforms that dominated a single days worth of screentime")
+      
+# Bar Chart 3: 
+ggplot(data = Dominating_Time) +
+  geom_bar(aes(y = Content_Platform, x = avg_time, fill = Majority_Screentime), 
+           stat = "identity") +
+  labs(title = "Mean Screentime and Most used Content Platforms",
+       x = "Average Screentime",
+       y = "Most Used Content Platform")
+
+paste0("According to my data the mean screentime reported through ", Number_of_responses, " responses was ", mean_screentime, ". The graph shows the most used Content platform for each day in relation to the total screentime for that day. Overall it seems that on days the average screentime was higher, Free Streeming Platforms were the most used content platforms and dominated majority of that screentime.")
+
+```
+
+
