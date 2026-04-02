@@ -76,6 +76,7 @@ ggplot(data = Dominating_Time) +
        x = "Average Screentime",
        y = "Most Used Content Platform")
 
+
 paste0("According to my data the mean screentime reported through ", Number_of_responses, " responses was ", mean_screentime, ". The graph shows the most used Content platform for each day in relation to the total screentime for that day. Overall it seems that on days the average screentime was higher, Free Streeming Platforms were the most used content platforms and dominated majority of that screentime.")
 
 ```
